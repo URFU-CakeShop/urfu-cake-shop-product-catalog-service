@@ -1,1 +1,5 @@
-# urfu-cake-shop-product-catalog-service
+# Product Catalog Service
+
+## Назначение
+
+### Сервис управляет каталогом товаров.

@@ -11,6 +11,6 @@ public class ProductTypeNotFoundException extends RuntimeException {
      * @param productTypeId Идентификатор типа продукта
      */
     public ProductTypeNotFoundException(UUID productTypeId) {
-        super("Product type is not found = " + productTypeId);
+        super("Type not found = " + productTypeId);
     }
 }

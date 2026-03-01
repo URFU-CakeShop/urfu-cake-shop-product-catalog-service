@@ -6,7 +6,9 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
-
+/**
+ * Продукт
+ */
 @Table(name = "product")
 @Entity
 @Data
@@ -18,13 +20,15 @@ public class Product {
     private UUID id;
     private String name;
     private String description;
-    @OneToMany(fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "product_product_type",
-        joinColumns = @JoinColumn(name = "product_id"),
-        inverseJoinColumns = @JoinColumn(name = "product_type_id")
-    )
+    @ManyToOne(fetch = FetchType.EAGER)
     private ProductType type;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "product_categories",
+        joinColumns = @JoinColumn(name = "product_id"),
+        inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
+    private ProductCategory category;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Integer version;

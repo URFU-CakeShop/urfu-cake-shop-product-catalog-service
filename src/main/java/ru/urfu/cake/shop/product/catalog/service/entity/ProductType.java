@@ -6,7 +6,9 @@ import jakarta.persistence.Table;
 import lombok.Data;
 
 import java.util.UUID;
-
+/**
+ * Тип продукта
+ */
 @Entity
 @Table(name = "product_type")
 @Data

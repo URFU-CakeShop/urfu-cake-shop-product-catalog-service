@@ -3,6 +3,7 @@ package ru.urfu.cake.shop.product.catalog.service.dto.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 /**
  * Продукт в API
@@ -14,5 +15,5 @@ public class ProductDto {
     private String name;
     private String description;
     private UUID typeId;
-    private UUID categoryId;
+    private List<UUID> categoryId;
 }

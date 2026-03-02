@@ -2,6 +2,7 @@ package ru.urfu.cake.shop.product.catalog.service.dto.request;
 
 import lombok.Data;
 
+import java.util.List;
 import java.util.UUID;
 /**
  * Запрос на создание продукта
@@ -11,5 +12,5 @@ public class CreateProductDto {
     private String name;
     private String description;
     private UUID typeId;
-    private UUID categoryId;
+    private List<UUID> categoryIdList;
 }

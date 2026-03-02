@@ -1,6 +1,7 @@
 package ru.urfu.cake.shop.product.catalog.service.service;
 
 import java.time.LocalDateTime;
+import java.util.LinkedList;
 import java.util.UUID;
 
 import lombok.RequiredArgsConstructor;
@@ -40,16 +41,16 @@ public class ProductServiceImpl implements ProductService {
             throw new ProductTypeNotFoundException(request.getTypeId());
         }
         var productType = productTypeOptional.get();
-        var productCategoryOptional = productCategoryRepository.findById(request.getCategoryId());
-        if (productCategoryOptional.isEmpty()) {
-            throw new ProductTypeNotFoundException(request.getTypeId());
+        var productCategoryList = new LinkedList<ProductCategory>();
+        for (var productCategoryId : request.getCategoryIdList()) {
+            var productCategory = getCategoryById(productCategoryId);
+            productCategoryList.add(productCategory);
         }
-        var productCategory = productCategoryOptional.get();
         var product = new Product();
         product.setName(request.getName());
         product.setDescription(request.getDescription());
         product.setType(productType);
-        product.setCategory(productCategory);
+        product.setCategory(productCategoryList);
         product.setCreatedAt(LocalDateTime.now());
         product.setUpdatedAt(LocalDateTime.now());
         product.setVersion(StartVersion);

@@ -5,6 +5,8 @@ import lombok.Data;
 import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 /**
  * Продукт
@@ -28,7 +30,7 @@ public class Product {
         joinColumns = @JoinColumn(name = "product_id"),
         inverseJoinColumns = @JoinColumn(name = "category_id")
     )
-    private ProductCategory category;
+    private List<ProductCategory> category = new ArrayList<>();
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private Integer version;

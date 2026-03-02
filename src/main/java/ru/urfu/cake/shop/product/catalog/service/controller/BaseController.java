@@ -85,7 +85,7 @@ public abstract class BaseController {
             product.getName(),
             product.getDescription(),
             product.getType().getId(),
-            product.getCategory().getId()
+            product.getCategory().stream().map(ProductCategory::getId).toList()
         );
     }
     /**

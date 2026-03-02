@@ -112,7 +112,7 @@ public class ProductController extends BaseController {
      */
     @PostMapping("product/category/{categoryId}/detach")
     public ResponseEntity<ApiResponse<ProductCategoryDto>> detachProductCategory(
-            @PathVariable(name = "categoryId") UUID categoryId
+        @PathVariable(name = "categoryId") UUID categoryId
     ) {
         try {
             productService.detach(categoryId);

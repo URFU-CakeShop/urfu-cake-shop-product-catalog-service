@@ -8,6 +8,5 @@ import java.util.UUID;
  */
 @Data
 public class CreateProductCategoryDto {
-    private UUID id;
     private String name;
 }

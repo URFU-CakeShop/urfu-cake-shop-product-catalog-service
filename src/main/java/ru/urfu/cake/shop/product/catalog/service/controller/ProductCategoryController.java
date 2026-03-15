@@ -11,6 +11,8 @@ import ru.urfu.cake.shop.product.catalog.service.exception.ProductCategoryNotFou
 import ru.urfu.cake.shop.product.catalog.service.repository.ProductCategoryRepository;
 import ru.urfu.cake.shop.product.catalog.service.service.ProductService;
 
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 /**
  * Контроллер категорий
@@ -32,6 +34,20 @@ public class ProductCategoryController extends BaseController {
         var result = productService.create(request);
         var response = toDto(result);
         return buildSuccessResponse(response);
+    }
+    /**
+     * Получить все категории продуктов
+     *
+     * @return Категория продукта
+     */
+    @GetMapping
+    public ResponseEntity<ApiResponse<List<ProductCategoryDto>>> getProductCategories() {
+        var categoryList = productCategoryRepository.findAll();
+        var categoryListDto = new LinkedList<ProductCategoryDto>();
+        for (var category : categoryList) {
+            categoryListDto.add(toDto(category));
+        }
+        return buildSuccessResponse(categoryListDto);
     }
     /**
      * Получить категорию продукта

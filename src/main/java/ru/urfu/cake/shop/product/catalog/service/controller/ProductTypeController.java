@@ -13,7 +13,6 @@ import ru.urfu.cake.shop.product.catalog.service.repository.ProductTypeRepositor
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
-
 /**
  * Контроллер типов продуктов
  */

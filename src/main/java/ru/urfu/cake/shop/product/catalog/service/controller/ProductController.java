@@ -4,40 +4,26 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.urfu.cake.shop.product.catalog.service.dto.request.CreateProductCategoryDto;
-import ru.urfu.cake.shop.product.catalog.service.dto.request.CreateProductTypeDto;
 import ru.urfu.cake.shop.product.catalog.service.dto.response.ApiResponse;
 import ru.urfu.cake.shop.product.catalog.service.dto.request.CreateProductDto;
-import ru.urfu.cake.shop.product.catalog.service.dto.response.ProductCategoryDto;
 import ru.urfu.cake.shop.product.catalog.service.dto.response.ProductDto;
-import ru.urfu.cake.shop.product.catalog.service.dto.response.ProductTypeDto;
-import ru.urfu.cake.shop.product.catalog.service.entity.ProductType;
-import ru.urfu.cake.shop.product.catalog.service.exception.ProductCategoryNotFoundException;
 import ru.urfu.cake.shop.product.catalog.service.exception.ProductTypeNotFoundException;
-import ru.urfu.cake.shop.product.catalog.service.repository.ProductCategoryRepository;
-import ru.urfu.cake.shop.product.catalog.service.repository.ProductTypeRepository;
 import ru.urfu.cake.shop.product.catalog.service.service.ProductService;
-
-import java.util.LinkedList;
-import java.util.List;
-import java.util.UUID;
 /**
  * Контроллер продуктов
  */
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/product")
 @RequiredArgsConstructor
 public class ProductController extends BaseController {
     private final ProductService productService;
-    private final ProductTypeRepository productTypeRepository;
-    private final ProductCategoryRepository productCategoryRepository;
     /**
      * Создать продукт
      *
      * @param request Запрос
      * @return Результат обработки запроса
      */
-    @PostMapping("product")
+    @PostMapping
     public ResponseEntity<ApiResponse<ProductDto>> create(@RequestBody CreateProductDto request) {
         try {
             var result = productService.create(request);
@@ -45,113 +31,6 @@ public class ProductController extends BaseController {
             return buildSuccessResponse(response, "Product created successfully");
         } catch (ProductTypeNotFoundException ex) {
             return buildFailResponse(HttpStatus.BAD_REQUEST, "Product type not found");
-        }
-    }
-    /**
-     * Создать тип продукта
-     *
-     * @param request Запрос
-     * @return Результат обработки запроса
-     */
-    @PostMapping("product/type")
-    public ResponseEntity<ApiResponse<ProductTypeDto>> createProductType(@RequestBody CreateProductTypeDto request) {
-        var productType = new ProductType();
-        productType.setName(request.getName());
-        var productTypeSaved = productTypeRepository.save(productType);
-        var result = toDto(productTypeSaved);
-        return buildSuccessResponse(result);
-    }
-    /**
-     * Получить все возможные типы
-     *
-     * @return Результат обработки запроса
-     */
-    @GetMapping("product/type")
-    public ResponseEntity<ApiResponse<List<ProductTypeDto>>> createProductType() {
-        var productTypeList = productTypeRepository.findAll();
-        var productTypeDtoList = new LinkedList<ProductTypeDto>();
-        for (var productType : productTypeList) {
-            var productTypeDto = toDto(productType);
-            productTypeDtoList.addLast(productTypeDto);
-        }
-        return buildSuccessResponse(productTypeDtoList);
-    }
-    /**
-     * Получить тип продукта
-     *
-     * @param typeId Идентификатор типа продукта
-     * @return Тип продукта
-     */
-    @GetMapping("product/type/{id}")
-    public ResponseEntity<ApiResponse<ProductTypeDto>> getProductType(@PathVariable(name = "id") UUID typeId) {
-        var typeOptional = productTypeRepository.findById(typeId);
-        if (typeOptional.isEmpty()) {
-            return buildFailResponse(HttpStatus.NOT_FOUND, "Product type not found");
-        }
-        var type = typeOptional.get();
-        var response = toDto(type);
-        return buildSuccessResponse(response);
-    }
-    /**
-     * Создать категорию продукта
-     *
-     * @param request Запрос
-     * @return Категория продукта
-     */
-    @PostMapping("product/category")
-    public ResponseEntity<ApiResponse<ProductCategoryDto>> createProductCategory(@RequestBody CreateProductCategoryDto request) {
-        var result = productService.create(request);
-        var response = toDto(result);
-        return buildSuccessResponse(response);
-    }
-    /**
-     * Получить категорию продукта
-     *
-     * @param categoryId Идентификатор категории продукта
-     * @return Категория продукта
-     */
-    @GetMapping("product/category/{id}")
-    public ResponseEntity<ApiResponse<ProductCategoryDto>> getProductCategory(@PathVariable(name = "id") UUID categoryId) {
-        var categoryOptional = productCategoryRepository.findById(categoryId);
-        if (categoryOptional.isEmpty()) {
-            return buildFailResponse(HttpStatus.NOT_FOUND, "Product category not found");
-        }
-        var category = categoryOptional.get();
-        var response = toDto(category);
-        return buildSuccessResponse(response);
-    }
-    /**
-     * Привязать категорию продукта к другой категории
-     *
-     * @param sourceId Исходная категория продуктов
-     * @param targetId Категория продукта которую необходимо привязать
-     */
-    @PostMapping("product/category/{sourceId}/attach/{targetId}")
-    public ResponseEntity<ApiResponse<ProductCategoryDto>> attachProductCategory(
-        @PathVariable(name = "sourceId") UUID sourceId,
-        @PathVariable(name = "targetId") UUID targetId
-    ) {
-        try {
-            productService.attach(sourceId, targetId);
-            return buildSuccessResponse();
-        } catch (ProductCategoryNotFoundException ex) {
-            return buildFailResponse(HttpStatus.BAD_REQUEST, "Product category not found");
-        }
-    }
-    /**
-     * Отвязать родителя указанной категории продукта
-     *
-     * @param categoryId Категория продуктов
-     */
-    @PostMapping("product/category/{categoryId}/detach")
-    public ResponseEntity<ApiResponse<ProductCategoryDto>> detachProductCategory(
-        @PathVariable(name = "categoryId") UUID categoryId
-    ) {
-        try {
-            productService.detach(categoryId);
-            return buildSuccessResponse();
-        } catch (ProductCategoryNotFoundException ex) {
-            return buildFailResponse(HttpStatus.BAD_REQUEST, "Product category not found");
         }
     }
 }

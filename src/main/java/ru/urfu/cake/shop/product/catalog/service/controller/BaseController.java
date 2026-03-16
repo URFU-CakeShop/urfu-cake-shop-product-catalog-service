@@ -6,9 +6,11 @@ import ru.urfu.cake.shop.product.catalog.service.dto.response.ApiResponse;
 import ru.urfu.cake.shop.product.catalog.service.dto.response.ProductCategoryDto;
 import ru.urfu.cake.shop.product.catalog.service.dto.response.ProductDto;
 import ru.urfu.cake.shop.product.catalog.service.dto.response.ProductTypeDto;
+import ru.urfu.cake.shop.product.catalog.service.dto.response.ProductVariantDto;
 import ru.urfu.cake.shop.product.catalog.service.entity.Product;
 import ru.urfu.cake.shop.product.catalog.service.entity.ProductCategory;
 import ru.urfu.cake.shop.product.catalog.service.entity.ProductType;
+import ru.urfu.cake.shop.product.catalog.service.entity.ProductVariant;
 
 import java.util.LinkedList;
 import java.util.UUID;
@@ -117,5 +119,25 @@ public abstract class BaseController {
             parentId = parent.getId();
         }
         return new ProductCategoryDto(productCategory.getId(), productCategory.getName(), parentId, subcategories);
+    }
+    /**
+     * Привести разновидность продукта к DTO
+     *
+     * @param productVariant Разновидность продукта
+     * @return DTO
+     */
+    protected static ProductVariantDto toDto(ProductVariant productVariant) {
+        return new ProductVariantDto(
+            productVariant.getId(),
+            productVariant.getProduct().getId(),
+            productVariant.getSku(),
+            productVariant.getPrice(),
+            productVariant.getCurrency(),
+            productVariant.getWeight(),
+            productVariant.isActive(),
+            productVariant.getCreatedAt(),
+            productVariant.getUpdatedAt(),
+            productVariant.getVersion()
+        );
     }
 }

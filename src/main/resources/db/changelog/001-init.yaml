@@ -133,4 +133,59 @@ databaseChangeLog:
             constraintName: fk_procat_on_product_category
             referencedColumnNames: id
             referencedTableName: category
+  - changeSet:
+      id: 1772393654383-9
+      author: mihail
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - createTable:
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                    primaryKey: true
+                    primaryKeyName: pk_product_variant
+                  name: id
+                  type: UUID
+              - column:
+                  constraints:
+                    nullable: false
+                  name: product_id
+                  type: UUID
+              - column:
+                  name: sku
+                  type: VARCHAR(255)
+              - column:
+                  name: price
+                  type: NUMERIC(19,2)
+              - column:
+                  name: currency
+                  type: VARCHAR(3)
+              - column:
+                  name: weight
+                  type: DOUBLE PRECISION
+              - column:
+                  name: is_active
+                  type: BOOLEAN
+              - column:
+                  name: created_at
+                  type: DATETIME
+              - column:
+                  name: updated_at
+                  type: DATETIME
+              - column:
+                  name: version
+                  type: INT
+            tableName: product_variant
+  - changeSet:
+      id: 1772393654383-10
+      author: mihail
+      objectQuotingStrategy: QUOTE_ONLY_RESERVED_WORDS
+      changes:
+        - addForeignKeyConstraint:
+            baseColumnNames: product_id
+            baseTableName: product_variant
+            constraintName: fk_product_variant_on_product
+            referencedColumnNames: id
+            referencedTableName: product
 

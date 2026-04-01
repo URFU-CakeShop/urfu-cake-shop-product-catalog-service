@@ -10,7 +10,12 @@ import ru.urfu.cake.shop.product.catalog.dto.response.ProductCategoryDto;
 import ru.urfu.cake.shop.product.catalog.exception.ProductCategoryNotFoundException;
 import ru.urfu.cake.shop.product.catalog.repository.ProductCategoryRepository;
 import ru.urfu.cake.shop.product.catalog.ProductService;
-
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.Parameter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -20,6 +25,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/product/category")
 @RequiredArgsConstructor
+@Tag(name = "Product Category", description = "Управление категориями продуктов")
 public class ProductCategoryController extends BaseController {
     private final ProductService productService;
     private final ProductCategoryRepository productCategoryRepository;
@@ -30,6 +36,11 @@ public class ProductCategoryController extends BaseController {
      * @return Категория продукта
      */
     @PostMapping
+    @Operation(summary = "Создать категорию продукта", description = "Создание новой категории продукта")
+    @ApiResponses(value = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Категория успешно создана", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Неверный запрос")
+    })
     public ResponseEntity<ApiResponse<ProductCategoryDto>> createProductCategory(@RequestBody CreateProductCategoryDto request) {
         var result = productService.create(request);
         var response = toDto(result);
@@ -41,6 +52,10 @@ public class ProductCategoryController extends BaseController {
      * @return Категория продукта
      */
     @GetMapping
+    @Operation(summary = "Получить все категории продуктов", description = "Возвращает список всех категорий продуктов")
+    @ApiResponses(value = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Список категорий успешно получен", content = @Content(schema = @Schema(implementation = ApiResponse.class)))
+    })
     public ResponseEntity<ApiResponse<List<ProductCategoryDto>>> getProductCategories() {
         var categoryList = productCategoryRepository.findAll();
         var categoryListDto = new LinkedList<ProductCategoryDto>();
@@ -56,7 +71,15 @@ public class ProductCategoryController extends BaseController {
      * @return Категория продукта
      */
     @GetMapping("{id}")
-    public ResponseEntity<ApiResponse<ProductCategoryDto>> getProductCategory(@PathVariable(name = "id") UUID categoryId) {
+    @Operation(summary = "Получить категорию продукта по ID", description = "Возвращает категорию продукта по указанному идентификатору")
+    @ApiResponses(value = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Категория успешно получена", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "404", description = "Категория не найдена")
+    })
+    public ResponseEntity<ApiResponse<ProductCategoryDto>> getProductCategory(
+            @PathVariable(name = "id")
+            @Parameter(description = "Идентификатор категории продукта", required = true)
+            UUID categoryId) {
         var categoryOptional = productCategoryRepository.findById(categoryId);
         if (categoryOptional.isEmpty()) {
             return buildFailResponse(HttpStatus.NOT_FOUND, "Product category not found");
@@ -72,9 +95,18 @@ public class ProductCategoryController extends BaseController {
      * @param targetId Категория продукта которую необходимо привязать
      */
     @PostMapping("{sourceId}/attach/{targetId}")
+    @Operation(summary = "Привязать категорию продукта к другой категории", description = "Устанавливает родительскую связь между двумя категориями")
+    @ApiResponses(value = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Категории успешно привязаны", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Категория не найдена")
+    })
     public ResponseEntity<ApiResponse<ProductCategoryDto>> attachProductCategory(
-            @PathVariable(name = "sourceId") UUID sourceId,
-            @PathVariable(name = "targetId") UUID targetId
+            @PathVariable(name = "sourceId")
+            @Parameter(description = "Идентификатор исходной категории", required = true)
+            UUID sourceId,
+            @PathVariable(name = "targetId")
+            @Parameter(description = "Идентификатор целевой категории", required = true)
+            UUID targetId
     ) {
         try {
             productService.attach(sourceId, targetId);
@@ -89,8 +121,15 @@ public class ProductCategoryController extends BaseController {
      * @param categoryId Категория продуктов
      */
     @PostMapping("{categoryId}/detach")
+    @Operation(summary = "Отвязать родительскую категорию", description = "Удаляет родительскую связь у указанной категории")
+    @ApiResponses(value = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Категория успешно отвязана", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Категория не найдена")
+    })
     public ResponseEntity<ApiResponse<ProductCategoryDto>> detachProductCategory(
-            @PathVariable(name = "categoryId") UUID categoryId
+            @PathVariable(name = "categoryId")
+            @Parameter(description = "Идентификатор категории продукта", required = true)
+            UUID categoryId
     ) {
         try {
             productService.detach(categoryId);

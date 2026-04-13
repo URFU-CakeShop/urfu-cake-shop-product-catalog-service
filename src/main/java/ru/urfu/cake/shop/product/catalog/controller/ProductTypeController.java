@@ -13,6 +13,7 @@ import ru.urfu.cake.shop.product.catalog.repository.ProductTypeRepository;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -37,7 +38,7 @@ public class ProductTypeController extends BaseController {
         @ApiResponse(responseCode = "200", description = "Тип продукта успешно создан"),
         @ApiResponse(responseCode = "400", description = "Неверный запрос")
     })
-    public ResponseEntity<ru.urfu.cake.shop.product.catalog.dto.response.ApiResponse<ProductTypeDto>> createProductType(@RequestBody CreateProductTypeDto request) {
+    public ResponseEntity<ru.urfu.cake.shop.product.catalog.dto.response.ApiResponse<ProductTypeDto>> createProductType(@RequestBody @Schema(description = "Данные для создания типа продукта", required = true) CreateProductTypeDto request) {
         var productType = new ProductType();
         productType.setName(request.getName());
         var productTypeSaved = productTypeRepository.save(productType);

@@ -9,6 +9,7 @@ import ru.urfu.cake.shop.product.catalog.dto.response.ProductDto;
 import ru.urfu.cake.shop.product.catalog.exception.ProductTypeNotFoundException;
 import ru.urfu.cake.shop.product.catalog.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -33,7 +34,7 @@ public class ProductController extends BaseController {
         @ApiResponse(responseCode = "200", description = "Продукт успешно создан"),
         @ApiResponse(responseCode = "400", description = "Неверный запрос или тип продукта не найден")
     })
-    public ResponseEntity<ru.urfu.cake.shop.product.catalog.dto.response.ApiResponse<ProductDto>> create(@RequestBody CreateProductDto request) {
+    public ResponseEntity<ru.urfu.cake.shop.product.catalog.dto.response.ApiResponse<ProductDto>> create(@RequestBody @Schema(description = "Данные для создания продукта", required = true) CreateProductDto request) {
         try {
             var result = productService.create(request);
             var response = toDto(result);

@@ -9,6 +9,7 @@ import java.util.UUID;
  * Запрос на создание разновидности продукта
  */
 @Data
+@Schema(description = "Запрос на создание варианта продукта")
 public class CreateProductVariantDto {
     @Schema(description = "Идентификатор продукта", example = "123e4567-e89b-12d3-a456-426614174000", required = true)
     private UUID productId;

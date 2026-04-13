@@ -11,6 +11,7 @@ import java.util.UUID;
  */
 @Data
 @AllArgsConstructor
+@Schema(description = "Продукт в API")
 public class ProductDto {
     @Schema(description = "Идентификатор продукта", example = "123e4567-e89b-12d3-a456-426614174000")
     private UUID id;

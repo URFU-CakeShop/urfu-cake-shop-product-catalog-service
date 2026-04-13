@@ -14,6 +14,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -39,7 +40,7 @@ public class ProductCategoryController extends BaseController {
         @ApiResponse(responseCode = "200", description = "Категория успешно создана"),
         @ApiResponse(responseCode = "400", description = "Неверный запрос")
     })
-    public ResponseEntity<ru.urfu.cake.shop.product.catalog.dto.response.ApiResponse<ProductCategoryDto>> createProductCategory(@RequestBody CreateProductCategoryDto request) {
+    public ResponseEntity<ru.urfu.cake.shop.product.catalog.dto.response.ApiResponse<ProductCategoryDto>> createProductCategory(@RequestBody @Schema(description = "Данные для создания категории продукта", required = true) CreateProductCategoryDto request) {
         var result = productService.create(request);
         var response = toDto(result);
         return buildSuccessResponse(response);

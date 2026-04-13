@@ -8,6 +8,7 @@ import java.util.UUID;
  * Запрос на создание категории продукта
  */
 @Data
+@Schema(description = "Запрос на создание категории продукта")
 public class CreateProductCategoryDto {
     @Schema(description = "Наименование категории продукта", example = "Торты", required = true)
     private String name;

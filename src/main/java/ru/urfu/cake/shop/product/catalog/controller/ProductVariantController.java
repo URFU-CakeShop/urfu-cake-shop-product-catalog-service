@@ -39,7 +39,7 @@ public class ProductVariantController extends BaseController {
         @ApiResponse(responseCode = "200", description = "Вариант продукта успешно создан", content = @Content(schema = @Schema(implementation = ApiResponse.class))),
         @ApiResponse(responseCode = "400", description = "Неверный запрос или продукт не найден")
     })
-    public ResponseEntity<ru.urfu.cake.shop.product.catalog.dto.response.ApiResponse<ProductVariantDto>> create(@RequestBody CreateProductVariantDto request) {
+    public ResponseEntity<ru.urfu.cake.shop.product.catalog.dto.response.ApiResponse<ProductVariantDto>> create(@RequestBody @Schema(description = "Данные для создания варианта продукта", required = true) CreateProductVariantDto request) {
         try {
             var result = productVariantService.create(request);
             var response = toDto(result);

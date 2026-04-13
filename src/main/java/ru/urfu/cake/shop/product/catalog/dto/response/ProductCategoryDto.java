@@ -11,6 +11,7 @@ import java.util.UUID;
  */
 @Data
 @AllArgsConstructor
+@Schema(description = "Категория продукта в API")
 public class ProductCategoryDto {
     @Schema(description = "Идентификатор категории продукта", example = "123e4567-e89b-12d3-a456-426614174000")
     private UUID id;

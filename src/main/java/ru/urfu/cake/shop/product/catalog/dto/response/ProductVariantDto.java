@@ -12,6 +12,7 @@ import java.util.UUID;
  */
 @Data
 @AllArgsConstructor
+@Schema(description = "Разновидность продукта в API")
 public class ProductVariantDto {
     @Schema(description = "Идентификатор варианта продукта", example = "123e4567-e89b-12d3-a456-426614174000")
     private UUID id;

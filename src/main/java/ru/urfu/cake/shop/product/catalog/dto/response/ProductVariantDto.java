@@ -31,6 +31,6 @@ public class ProductVariantDto {
     private LocalDateTime createdAt;
     @Schema(description = "Дата и время последнего обновления записи", example = "2024-01-15T10:30:00")
     private LocalDateTime updatedAt;
-    @Schema(description = "Версия записи (для оптимистичной блокировки)", example = "1")
+    @Schema(description = "Версия записи", example = "1")
     private Integer version;
 }

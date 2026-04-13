@@ -16,6 +16,6 @@ public class ApiResponse<T> {
     private boolean success;
     @Schema(description = "Данные ответа")
     private T data;
-    @Schema(description = "Сообщение", example = "Not found")
+    @Schema(description = "Сообщение", example = "Message")
     private String message;
 }

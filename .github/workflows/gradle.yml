@@ -1,4 +1,4 @@
-name: CI Pipeline with Versioned Docker Image
+name: Docker image publish
 
 on:
   push:

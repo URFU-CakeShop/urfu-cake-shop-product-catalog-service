@@ -59,9 +59,9 @@ jobs:
 #      - name: Make gradlew executable
 #        run: chmod +x gradlew
 #
-#      - name: Get project version
-#        id: get_version
-#        run: echo "VERSION=$(./gradlew -q printVersion)" >> $GITHUB_ENV
+      - name: Get project version
+        id: get_version
+        run: echo "VERSION=$(./gradlew -q printVersion)" >> $GITHUB_ENV
 #
 #      - name: Build and test project
 #        run: ./gradlew build

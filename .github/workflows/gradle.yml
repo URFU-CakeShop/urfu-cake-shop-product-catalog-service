@@ -41,40 +41,40 @@ jobs:
         with:
           registry: ghcr.io
           username: urfu-cakeshop
-          password: ${{ secrets.GHCR_TOKEN_2 }}
+          password: ${{ secrets.GHCR_TOKEN }}
 
       - name: Checkout repository
         uses: actions/checkout@v4
 
-#      - name: Setup Java
-#        uses: actions/setup-java@v4
-#        with:
-#          distribution: temurin
-#          java-version: 17
-#          cache: gradle
-#
-#      - name: Setup Gradle
-#        uses: gradle/actions/setup-gradle@v3
-#
-#      - name: Make gradlew executable
-#        run: chmod +x gradlew
-#
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
       - name: Get project version
         id: get_version
         run: echo "VERSION=$(./gradlew -q printVersion)" >> $GITHUB_ENV
-#
-#      - name: Build and test project
-#        run: ./gradlew build
+
+      - name: Build and test project
+        run: ./gradlew build
 
       - name: Build Docker image
         run: |
           IMAGE=ghcr.io/urfu-cakeshop/cake-shop-product-catalog-service
           docker build -t $IMAGE:latest -t $IMAGE:${GITHUB_SHA} -t $IMAGE:${VERSION} .
 
-#      - name: Security scan Docker image
-#        uses: aquasecurity/trivy-action@master
-#        with:
-#          image-ref: ghcr.io/urfu-cakeshop/cake-shop-product-catalog-service:latest
+      - name: Security scan Docker image
+        uses: aquasecurity/trivy-action@master
+        with:
+          image-ref: ghcr.io/urfu-cakeshop/cake-shop-product-catalog-service:latest
 
       - name: Push Docker image
         run: |

@@ -10,7 +10,7 @@ import ru.urfu.cake.shop.product.catalog.dto.request.CreateProductVariantDto;
 import ru.urfu.cake.shop.product.catalog.dto.response.ProductVariantDto;
 import ru.urfu.cake.shop.product.catalog.exception.ProductNotFoundException;
 import ru.urfu.cake.shop.product.catalog.exception.ProductVariantNotFoundException;
-import ru.urfu.cake.shop.product.catalog.ProductVariantService;
+import ru.urfu.cake.shop.product.catalog.service.ProductVariantService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import io.swagger.v3.oas.annotations.media.Schema;

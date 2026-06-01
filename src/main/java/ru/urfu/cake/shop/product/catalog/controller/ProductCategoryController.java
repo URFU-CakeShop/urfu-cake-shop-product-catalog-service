@@ -9,7 +9,7 @@ import ru.urfu.cake.shop.product.catalog.dto.request.CreateProductCategoryDto;
 import ru.urfu.cake.shop.product.catalog.dto.response.ProductCategoryDto;
 import ru.urfu.cake.shop.product.catalog.exception.ProductCategoryNotFoundException;
 import ru.urfu.cake.shop.product.catalog.repository.ProductCategoryRepository;
-import ru.urfu.cake.shop.product.catalog.ProductService;
+import ru.urfu.cake.shop.product.catalog.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;

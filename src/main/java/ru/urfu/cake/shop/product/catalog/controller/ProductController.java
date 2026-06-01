@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.urfu.cake.shop.product.catalog.dto.request.CreateProductDto;
 import ru.urfu.cake.shop.product.catalog.dto.response.ProductDto;
 import ru.urfu.cake.shop.product.catalog.exception.ProductTypeNotFoundException;
-import ru.urfu.cake.shop.product.catalog.ProductService;
+import ru.urfu.cake.shop.product.catalog.service.ProductService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;

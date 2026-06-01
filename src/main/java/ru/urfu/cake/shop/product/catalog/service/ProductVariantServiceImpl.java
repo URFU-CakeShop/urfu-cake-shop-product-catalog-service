@@ -1,9 +1,8 @@
-package ru.urfu.cake.shop.product.catalog;
+package ru.urfu.cake.shop.product.catalog.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.urfu.cake.shop.product.catalog.dto.request.CreateProductVariantDto;
-import ru.urfu.cake.shop.product.catalog.entity.Product;
 import ru.urfu.cake.shop.product.catalog.entity.ProductVariant;
 import ru.urfu.cake.shop.product.catalog.exception.ProductNotFoundException;
 import ru.urfu.cake.shop.product.catalog.exception.ProductVariantNotFoundException;
@@ -76,10 +75,6 @@ public class ProductVariantServiceImpl implements ProductVariantService {
         if (productOptional.isEmpty()) {
             throw new ProductNotFoundException(productId);
         }
-        // Пока нет кастомного метода в репозитории, фильтруем в сервисе
-        var allVariants = productVariantRepository.findAll();
-        return allVariants.stream()
-                .filter(variant -> variant.getProduct().getId().equals(productId))
-                .toList();
+        return productVariantRepository.findByProductId(productId);
     }
 }

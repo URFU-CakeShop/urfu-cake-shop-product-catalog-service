@@ -1,4 +1,4 @@
-package ru.urfu.cake.shop.product.catalog;
+package ru.urfu.cake.shop.product.catalog.service;
 
 import ru.urfu.cake.shop.product.catalog.dto.request.CreateProductCategoryDto;
 import ru.urfu.cake.shop.product.catalog.dto.request.CreateProductDto;

@@ -1,4 +1,4 @@
-package ru.urfu.cake.shop.product.catalog;
+package ru.urfu.cake.shop.product.catalog.service;
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;
